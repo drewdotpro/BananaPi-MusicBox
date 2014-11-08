@@ -32,7 +32,7 @@ pip install https://github.com/drewdotpro/mopidy-gmusic/archive/develop.zip #Las
 cd /opt
 
 #Get the files of the Pi MusicBox project
-wget https://github.com/woutervanwijk/Pi-MusicBox/archive/master.zip
+wget https://github.com/drewdotpro/BananaPi-MusicBox/archive/master.zip
 
 #Unpack the zip-file and remove it if you want.
 unzip master.zip
