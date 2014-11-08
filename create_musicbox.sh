@@ -1,34 +1,32 @@
 #!/bin/bash
 
-# build your own Pi MusicBox.
-# reeeeeeaaallly alpha. Also see Create Pi MusicBox.rst
+#Get the power
+sudo -l
 
 #make sure no unneeded packages are installed
-echo -e 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\n' > /etc/apt/apt.conf
+echo -e "APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\n" > /etc/apt/apt.conf
 
 #Install the packages you need to continue:
-apt-get update && apt-get --yes install sudo wget unzip mc
+apt-get update && apt-get --yes install sudo wget unzip mc ntpdate python-pip
 
 #Next, issue this command to update the distribution.
 #This is good because newer versions have fixes for audio and usb-issues:
 
 apt-get dist-upgrade -y
 
-#Next, configure the installation of Mopidy, the music server that is the heart of MusicBox.
-#wget -q -O - http://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
-#wget -q -O /etc/apt/sources.list.d/mopidy.list http://apt.mopidy.com/mopidy.list
-
 #update time, to prevent update problems
 ntpdate -u ntp.ubuntu.com
 
 #Then install all packages we need with this command:
-sudo apt-get update && sudo apt-get --yes --no-install-suggests --no-install-recommends install logrotate alsa-utils wpasupplicant gstreamer0.10-alsa ifplugd gstreamer0.10-fluendo-mp3 gstreamer0.10-tools samba dos2unix avahi-utils alsa-base cifs-utils avahi-autoipd libnss-mdns ntpdate ca-certificates ncmpcpp rpi-update linux-wlan-ng alsa-firmware-loaders iw atmel-firmware firmware-atheros firmware-brcm80211 firmware-ipw2x00 firmware-iwlwifi firmware-libertas firmware-linux firmware-linux-nonfree firmware-ralink firmware-realtek zd1211-firmware linux-wlan-ng-firmware alsa-firmware-loaders iptables build-essential python-dev python-pip python-gst0.10 gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly gstreamer0.10-tools usbmount monit upmpdcli watchdog cifs-utils dropbear mpc dosfstools logrotate
+apt-get update && sudo apt-get --yes --no-install-suggests --no-install-recommends install logrotate alsa-utils wpasupplicant gstreamer0.10-alsa ifplugd gstreamer0.10-fluendo-mp3 gstreamer0.10-tools samba dos2unix avahi-utils alsa-base cifs-utils avahi-autoipd libnss-mdns ntpdate ca-certificates ncmpcpp rpi-update linux-wlan-ng alsa-firmware-loaders iw atmel-firmware firmware-atheros firmware-brcm80211 firmware-ipw2x00 firmware-iwlwifi firmware-libertas firmware-linux firmware-linux-nonfree firmware-ralink firmware-realtek zd1211-firmware linux-wlan-ng-firmware alsa-firmware-loaders iptables build-essential python-dev python-pip python-gst0.10 gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly gstreamer0.10-tools usbmount monit upmpdcli watchdog cifs-utils dropbear mpc dosfstools logrotate
 
 #mopidy from pip
-sudo pip install -U mopidy mopidy-spotify mopidy-local-sqlite mopidy-local-whoosh mopidy-scrobbler mopidy-soundcloud mopidy-dirble mopidy-tunein mopidy-gmusic mopidy-dirble mopidy-subsonic mopidy-http-kuechenradio mopidy-moped mopidy-musicbox-webclient mopidy-websettings mopidy-internetarchive mopidy-podcast mopidy-podcast-itunes mopidy-podcast-gpodder.net mopidy-simplewebclient mopidy-somafm mopidy-spotify-tunigo mopidy-youtube
+pip install -U mopidy-dirble
+pip install -U mopidy mopidy-spotify mopidy-local-sqlite mopidy-local-whoosh mopidy-scrobbler mopidy-soundcloud mopidy-dirble mopidy-tunein mopidy-gmusic mopidy-subsonic mopidy-http-kuechenradio mopidy-moped mopidy-musicbox-webclient mopidy-websettings mopidy-internetarchive mopidy-podcast mopidy-podcast-itunes mopidy-podcast-gpodder.net mopidy-simplewebclient mopidy-somafm mopidy-spotify-tunigo mopidy-youtube
 
 #Google Music works a lot better if you use the development version of mopidy-gmusic:
-sudo pip install https://github.com/hechtus/mopidy-gmusic/archive/develop.zip
+#pip install https://github.com/hechtus/mopidy-gmusic/archive/develop.zip #Source
+pip install https://github.com/drewdotpro/mopidy-gmusic/archive/develop.zip #Last update of working source
 
 #**Configuration and Files**
 cd /opt
